@@ -1,0 +1,2 @@
+#define KWS_DEFAULT_PORT 80
+#define KWS_SERVER_NAME "kws2"
