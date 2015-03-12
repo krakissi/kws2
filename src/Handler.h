@@ -4,11 +4,11 @@
 #include "Socket.h"
 
 class Handler {
-	SocketInfo *info;
+	Socket *sock;
 	int port;
 
 public:
-	Handler(SocketInfo *info, int port);
+	Handler(Socket*, int);
 	bool run();
 };
 

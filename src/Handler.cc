@@ -7,30 +7,30 @@ void chomp(char *str){
 		*str = 0;
 }
 
-Handler::Handler(SocketInfo *info, int port){
-	this->info = info;
+Handler::Handler(Socket *sock, int port){
+	this->sock = sock;
 	this->port = port;
 }
 
 // Attempt to handle one HTTP transaction. Returns false if there are no more
 // transactions to handle.
 bool Handler::run(){
-	fflush(info->stream);
+	fflush(sock->stream);
 
 	char *str = NULL;
 	size_t n;
 
-	if(feof(info->stream) || ferror(info->stream))
+	if(feof(sock->stream) || ferror(sock->stream))
 		return false;
 
-	info->block(false);
+	sock->block(false);
 	do {
-		if(getline(&str, &n, info->stream) <= 0)
+		if(getline(&str, &n, sock->stream) <= 0)
 			return false;
 
 		chomp(str);
 	}	while(!*str);
-	info->block(true);
+	sock->block(true);
 
 	// FIXME debug
 	cout << str << endl;

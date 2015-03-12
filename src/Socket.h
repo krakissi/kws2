@@ -10,23 +10,21 @@
 #include <cstdio>
 #include <fcntl.h>
 
-class SocketInfo {
+class Socket {
 public:
 	int sockfd;
 	struct sockaddr_in addr;
 	FILE *stream;
 
-	SocketInfo();
+	Socket();
 	void close_socket();
 	void block(bool);
 };
 
-class Socket {
-	SocketInfo *info;
-
+class ListenerSocket : public Socket {
 public:
-	Socket(int);
-	SocketInfo* accept_child();
+	ListenerSocket(int);
+	Socket* accept_child();
 	void close();
 };
 

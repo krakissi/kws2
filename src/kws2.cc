@@ -15,7 +15,7 @@
 using namespace std;
 
 int main(int argc, char **argv){
-	Socket *socket = NULL;
+	ListenerSocket *socket = NULL;
 
 	// Introduce ourselves.
 	cout << KWS_SERVER_NAME " is starting up!" << endl;
@@ -36,7 +36,7 @@ int main(int argc, char **argv){
 
 	// Bind the socket object, let's get cooking!
 	try {
-		socket = new Socket(port);
+		socket = new ListenerSocket(port);
 	} catch(const char *e){
 		cout << "Failed: " << e << endl;
 		return 1;
@@ -46,7 +46,7 @@ int main(int argc, char **argv){
 	signal(SIGCHLD, SIG_IGN);
 
 	while(1){
-		SocketInfo *client = socket->accept_child();
+		Socket *client = socket->accept_child();
 		pid_t pid;
 		
 		if(!client)
