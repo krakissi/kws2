@@ -53,7 +53,7 @@ int main(int argc, char **argv){
 			cout << "An error occurred when attempting to connect a client." << endl;
 		else if(!(pid = fork())){
 			// We're the child process, close our handle to the parent's listening socket.
-			socket->close();
+			socket->close_socket();
 
 			Handler *handler = new Handler(client, port);
 			while(handler->run());

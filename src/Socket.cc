@@ -61,7 +61,3 @@ Socket* ListenerSocket::accept_child(){
 
 	return info_client;
 }
-
-void ListenerSocket::close(){
-	close_socket();
-}

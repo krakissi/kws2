@@ -25,7 +25,6 @@ class ListenerSocket : public Socket {
 public:
 	ListenerSocket(int);
 	Socket* accept_child();
-	void close();
 };
 
 #endif
