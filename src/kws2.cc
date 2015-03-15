@@ -45,7 +45,8 @@ int main(int argc, char **argv){
 	// Let init handle the children.
 	signal(SIGCHLD, SIG_IGN);
 
-	while(1){
+	// Daemonize ourself.
+	if(!fork()) while(1){
 		Socket *client = socket->accept_child();
 		pid_t pid;
 		
@@ -55,8 +56,11 @@ int main(int argc, char **argv){
 			// We're the child process, close our handle to the parent's listening socket.
 			socket->close_socket();
 
-			Handler *handler = new Handler(client, port);
-			while(handler->run());
+			Handler handler(client, port);
+			handler.configure(100, 100);
+
+			// Handle connections until no more data is being sent on the socket, or the process otherwise fails.
+			while(handler.run());
 
 			// End of the child process.
 			client->close_socket();

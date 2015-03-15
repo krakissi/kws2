@@ -12,6 +12,16 @@ Handler::Handler(Socket *sock, int port){
 	this->port = port;
 }
 
+// The number of times to attempt to read from the network socket before
+// closing the connection handler, with the delay between attempts in
+// milliseconds.
+void Handler::configure(int retries, int delay){
+	this->retries = retries;
+
+	// This value will be passed to usleep, which works on microseconds.
+	this->delay = delay * 1000;
+}
+
 // Attempt to handle one HTTP transaction. Returns false if there are no more
 // transactions to handle.
 bool Handler::run(){
@@ -23,10 +33,22 @@ bool Handler::run(){
 	if(feof(sock->stream) || ferror(sock->stream))
 		return false;
 
+	int tries = 0;
 	sock->block(false);
 	do {
-		if(getline(&str, &n, sock->stream) <= 0)
-			return false;
+		if(getline(&str, &n, sock->stream) < 0){
+			int err = errno;
+
+			switch(err){
+			case EWOULDBLOCK:
+				if(tries++ >= retries)
+					return false;
+
+				clearerr(sock->stream);
+				usleep(delay);
+				continue;
+			}
+		}
 
 		chomp(str);
 	}	while(!*str);
