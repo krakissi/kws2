@@ -7,9 +7,10 @@ void chomp(char *str){
 		*str = 0;
 }
 
-Handler::Handler(Socket *sock, int port){
+Handler::Handler(Socket *sock, int port, Configurator *cfg){
 	this->sock = sock;
 	this->port = port;
+	this->cfg = cfg;
 }
 
 // The number of times to attempt to read from the network socket before

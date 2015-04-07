@@ -6,6 +6,7 @@
 */
 #include "Socket.h"
 #include "Handler.h"
+#include "Configurator.h"
 #include "constants.h"
 
 #include <iostream>
@@ -16,6 +17,7 @@ using namespace std;
 
 int main(int argc, char **argv){
 	ListenerSocket *socket = NULL;
+	string path_config = KWS_DEFAULT_CONFIG_FILE;
 
 	// Introduce ourselves.
 	cout << KWS_SERVER_NAME " is starting up!" << endl;
@@ -56,7 +58,11 @@ int main(int argc, char **argv){
 			// We're the child process, close our handle to the parent's listening socket.
 			socket->close_socket();
 
-			Handler handler(client, port);
+			// Grab updated configuration information.
+			Configurator cfg(path_config);
+
+			// Build the handler.
+			Handler handler(client, port, &cfg);
 			handler.configure(100, 100);
 
 			// Handle connections until no more data is being sent on the socket, or the process otherwise fails.
