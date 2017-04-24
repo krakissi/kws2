@@ -1,7 +1,7 @@
 INPUT=src
 OUTPUT=build
 BIN=$(OUTPUT)/bin
-OBJ=obj
+OBJ=$(OUTPUT)/obj
 SERVERBIN=kws2
 GCC=g++ -std=c++11
 
@@ -9,7 +9,6 @@ all: $(BIN)/$(SERVERBIN)
 
 clean:
 	rm -rf $(OUTPUT)
-	rm -rf $(OBJ)
 
 $(OUTPUT):
 	mkdir -p $(OUTPUT)
