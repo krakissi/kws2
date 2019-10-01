@@ -52,10 +52,12 @@ bool Handler::run(){
 		}
 
 		chomp(str);
-	}	while(!*str);
+	} while(!*str);
+
 	sock->block(true);
 
 	// FIXME debug
+	fprintf(sock->stream, "echo: %s\r\n", str);
 	cout << str << endl;
 
 	// TODO connection handling logic.
