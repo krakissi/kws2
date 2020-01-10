@@ -1,14 +1,14 @@
 #include "Configurator.h"
 
-Configurator::Configurator(string path){
-	this->path = path_original = path;
-
+Configurator::Configurator(string path) :
+	m_path(path), m_path_original(path)
+{
 	build();
 }
 
 // Load configuration.
 void Configurator::build(){
-	ifstream cfg(path);
+	ifstream cfg(m_path);
 	string buffer;
 
 	char *cbuf = NULL;
@@ -63,7 +63,7 @@ void Configurator::build(){
 		key.assign(cbuf);
 		value.assign(c);
 
-		config[key] = value;
+		m_config[key] = value;
 	}
 
 	// Release manually allocated memory.
@@ -73,5 +73,5 @@ void Configurator::build(){
 
 // Get a given value. Will return a valid string of zero length for unset values.
 string Configurator::get(string key){
-	return config[key];
+	return m_config[key];
 }

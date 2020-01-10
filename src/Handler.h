@@ -8,11 +8,11 @@
 #include <unistd.h>
 
 class Handler {
-	Socket *sock;
-	int port;
-	int retries;
-	int delay;
-	Configurator *cfg;
+	Socket *m_pSock;
+	int m_port;
+	int m_retries;
+	int m_delay;
+	Configurator *m_pCfg;
 
 public:
 	Handler(Socket*, int, Configurator*);

@@ -12,9 +12,9 @@
 
 class Socket {
 public:
-	int sockfd;
-	struct sockaddr_in addr;
-	FILE *stream;
+	int m_sockfd;
+	struct sockaddr_in m_addr;
+	FILE *m_pStream;
 
 	Socket();
 	void close_socket();

@@ -10,9 +10,9 @@
 using namespace std;
 
 class Configurator {
-	unordered_map<string, string> config;
-	string path_original;
-	string path;
+	unordered_map<string, string> m_config;
+	string m_path_original;
+	string m_path;
 
 public:
 	Configurator(string path);
