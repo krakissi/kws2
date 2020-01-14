@@ -17,7 +17,7 @@ public:
 	FILE *m_pStream;
 
 	Socket();
-	void close_socket();
+	~Socket();
 	void block(bool);
 };
 

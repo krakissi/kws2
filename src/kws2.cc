@@ -56,7 +56,7 @@ int main(int argc, char **argv){
 			cout << "An error occurred when attempting to connect a client." << endl;
 		else if(!(pid = fork())){
 			// We're the child process, close our handle to the parent's listening socket.
-			socket->close_socket();
+			delete socket;
 
 			// Grab updated configuration information.
 			Configurator cfg(path_config);
@@ -69,12 +69,12 @@ int main(int argc, char **argv){
 			while(handler.run());
 
 			// End of the child process.
-			client->close_socket();
+			delete client;
 			exit(0);
 		}
 
 		// The child process is handling this socket.
-		client->close_socket();
+		delete client;
 	}
 
 	return 0;

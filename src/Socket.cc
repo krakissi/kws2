@@ -8,7 +8,7 @@ Socket::Socket() :
 	memset(&m_addr, 0, sizeof(m_addr));
 }
 
-void Socket::close_socket(){
+Socket::~Socket(){
 	if(m_pStream)
 		fclose(m_pStream);
 	if(m_sockfd > 0)
